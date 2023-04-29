@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
 import os 
+import streamlit.components.v1 as components
 
 def generate_page(title, emoji):
     title = title.strip()
@@ -22,3 +23,15 @@ def generate_page(title, emoji):
     )  
     st.markdown('<hr style="width:70%; margin: auto;" />', unsafe_allow_html=True)
 
+def footer():
+    footer="""
+    <style>
+    .footer {
+    text-align: center;
+    }
+    </style>
+    <footer class="footer">
+    <p>Developed with ❤ by <a style='display: block; text-align: center;' href="https://www.linkedin.com/in/chihebedinezoghlemi/" target="_blank">Chiheb Eddine Zoghlami</a></p>
+    </footer>
+    """
+    components.html(footer)
