@@ -1,26 +1,33 @@
 import streamlit as st
-from components.page_setting import generate_page, footer
+from components.page_setting import generate_page, footer, load_cookies
 from components.login import login
-
+import extra_streamlit_components as stx
 
 generate_page('Snowflake-Sandbox', '❄️')
 
+cookie_manager = stx.CookieManager()
 
-if not st.session_state.get('authentication_status'):
-        st.session_state.authentication_status = None
+load_cookies(cookie_manager)
+st.write(st.session_state,'---' ,cookie_manager.get_all())
 
-
-
-st.write(st.session_state["authentication_status"])
-
-if st.session_state["authentication_status"]:
-        st.write(f'Welcome *{st.session_state["authentication_status"]}*')
-        st.title('Some content')
-elif st.session_state["authentication_status"] == False:
+login(cookie_manager)
+st.write(bool(st.session_state['authentication_status']))
+if cookie_manager.get('authentication_status'):
+        st.write('sahit')
+        if st.button('Logut'):
+                cookie_manager.set('authentication_status',None) 
+elif cookie_manager.get('authentication_status') == False:
         st.error('Invalid Credentials')
-        login()
-elif st.session_state["authentication_status"] == None:
-        login()
+else:
+        st.warning('Please provide your snowflake credentials ')
+
+
+
+
+
+
+
+  
 
 footer()
         

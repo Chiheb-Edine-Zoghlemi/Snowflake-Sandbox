@@ -15,5 +15,4 @@ def validated_credentials(username, password, account, warhouse, role):
         connection(username, password, account, warhouse, role)
         return True 
     except Exception as e :
-        print(e)
         return False
