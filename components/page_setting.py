@@ -2,18 +2,6 @@ import streamlit as st
 from PIL import Image
 import os 
 import streamlit.components.v1 as components
-import extra_streamlit_components as stx
-
-def load_cookies(cookie_manager):
-    if not cookie_manager.get('authentication_status') or cookie_manager.get('authentication_status') =='null':
-        st.session_state['authentication_status'] = None
-    else:
-        st.session_state['authentication_status'] = cookie_manager.get('authentication_status')
-    for key in ['username', 'password', 'account', 'warhouse', 'role' ]:
-        if not cookie_manager.get('authentication_status'):
-            st.session_state[key] = None
-        else:
-            st.session_state[key] = cookie_manager.get(key)
 
 
         
