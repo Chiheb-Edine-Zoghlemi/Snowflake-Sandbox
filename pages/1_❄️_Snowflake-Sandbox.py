@@ -17,7 +17,7 @@ if 'authenticated' in st.session_state:
                            st.session_state.role)
         check_system(user_cnx)
         logout()
-        # main()
+        main(user_cnx)
     else:
         login()
 else:

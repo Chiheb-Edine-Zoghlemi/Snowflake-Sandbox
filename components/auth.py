@@ -13,7 +13,6 @@ def reset_session():
 def check_user(username, password, account, warhouse, role):
     if username and  password and  account and  warhouse:
         auth_res = validated_credentials(username, password, account, warhouse, role)
-        auth_res = True
         st.session_state.authenticated = auth_res 
         if not auth_res:
             st.error("Please provide valid credentials.")
