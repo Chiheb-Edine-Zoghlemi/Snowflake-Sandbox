@@ -38,7 +38,17 @@ class snowcon:
     def check_role(self):
         return self.check_function("SHOW ROLES LIKE 'SANDBOX_ROLE';")
 
+    def check_creation_procedure(self):
+        return self.check_function("SHOW PROCEDURES  LIKE 'SANDBOX_CREATE' IN DATABASE 'SANDBOX_MAIN';")
 
+    
+    def check_cleaning_procedure(self):
+        return self.check_function("SHOW ROLES LIKE 'SANDBOX_DROP' IN DATABASE 'SANDBOX_MAIN';")
+
+    def check_task(self):
+        return self.check_function("SHOW TASKS LIKE 'SANDBOX_DROP'  IN DATABASE 'SANDBOX_MAIN';")
+
+    
     def check_database(self):
         return self.check_function("SHOW DATABASES LIKE 'SANDBOX_MAIN';")
         
@@ -62,6 +72,15 @@ class snowcon:
                     print("[ CREATION FUNCTION ERROR ]",e)
                     return False, e
 
+    def create_creation_procedure(self):
+        return True, None
+    
+    def create_cleaning_procedure(self):
+        return True, None
+    
+    def create_task(self):
+        return True, None
+    
     def create_user(self):
         return True, None
 
@@ -70,7 +89,11 @@ class snowcon:
 
 
     def create_warehouse(self):
-        return True, None
+        return self.creation_function(""" 
+        CREATE OR REPLACE WAREHOUSE SANDBOX_MONITOR_WH    
+        WAREHOUSE_SIZE  = XSMALL
+        INITIALLY_SUSPENDED = TRUE
+        COMMENT = "This warehouse will be used by the sandbox monitor user"  ; """)
 
 
     def create_database(self):

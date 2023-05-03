@@ -6,35 +6,33 @@ from time import sleep
 def check_system(user_cnx):
     progress_text = "Checking the snowflake environment. Please wait."
     checks_list = [
-        {'name': 'Cheking role ', 'sucess':'Role validation successful ✔️', 'error':'Role not found ❌',
-         'checking_func': user_cnx.check_role, 'creation': 'Creating the role', 'creation_funct': user_cnx.create_role},
-        {'name': 'Cheking user ', 'sucess':'User validation successful ✔️', 'error':'User not found ❌',
-         'checking_func': user_cnx.check_user, 'creation': 'Creating the user', 'creation_funct': user_cnx.create_user},
-          {'name': 'Cheking warhouse ', 'sucess':'Warhouse validation successful ✔️', 'error':'Warhouse not found ❌',
-         'checking_func': user_cnx.check_warhouse, 'creation': 'Creating the warhouse', 'creation_funct': user_cnx.create_warehouse},
-        {'name': 'Cheking database ', 'sucess':'Database validation successful ✔️','error':'Database not found ❌',
-          'checking_func': user_cnx.check_database, 'creation': 'Creating the database', 'creation_funct': user_cnx.create_database},
-         {'name': 'Cheking log table ', 'sucess':'Log table validation successful ✔️', 'error':'Log table not found ❌',
-         'checking_func': user_cnx.check_log_table, 'creation': 'Creating the log table', 'creation_funct': user_cnx.create_log_table}
+        {'name': 'role','checking_func': user_cnx.check_role,  'creation_funct': user_cnx.create_role},
+        {'name': 'user','checking_func': user_cnx.check_user, 'creation_funct': user_cnx.create_user},
+        {'name': 'warhouse','checking_func': user_cnx.check_warhouse,  'creation_funct': user_cnx.create_warehouse},
+        {'name': 'database', 'checking_func': user_cnx.check_database, 'creation_funct': user_cnx.create_database},
+        {'name': 'log table','checking_func': user_cnx.check_log_table, 'creation_funct': user_cnx.create_log_table},
+        {'name': 'sandbox creation procedure','checking_func': user_cnx.check_log_table, 'creation_funct': user_cnx.create_creation_procedure},
+        {'name': 'sandbox removing procedure','checking_func': user_cnx.check_log_table, 'creation_funct': user_cnx.create_cleaning_procedure},
+        {'name': 'sandbox removing task','checking_func': user_cnx.check_log_table, 'creation_funct': user_cnx.create_task}
     ]
 
     my_bar = st.progress(0, text=progress_text)
     log = st.empty()
     for index,percent_complete in enumerate([20,40,60,80,100]):
-        log.text(f"- {checks_list[index]['name']}" )
+        log.text(f"- Checking {checks_list[index]['name']}" )
         sleep(1)
         check_status = checks_list[index]['checking_func']()
         if check_status :
-            log.text(f"- {checks_list[index]['sucess']}")
+            log.text(f"- Validation {checks_list[index]['name']} successful ✔️")
             sleep(1)
         else:
-            log.text(f"- {checks_list[index]['error']}")
+            log.text(f"- Validation {checks_list[index]['name']} failed ❌")
             sleep(1)
-            log.text(f"- {checks_list[index]['creation']}")
+            log.text(f"- Creating {checks_list[index]['name']} 🛠️")
             sleep(1)
             creation_status, creation_log = checks_list[index]['creation_funct']()
             if creation_status:
-                pass
+                log.text(f"- Creation validation {checks_list[index]['name']} successful ✔️")
             else:
                 log.text(f"- {creation_log}")
         
