@@ -1,5 +1,5 @@
 import snowflake.connector
-
+import os 
 
 
 class snowcon:
@@ -36,17 +36,17 @@ class snowcon:
         
 
     def check_role(self):
-        return self.check_function("SHOW ROLES LIKE 'SANDBOX_ROLE';")
+        return self.check_function("SHOW ROLES LIKE 'SANDBOX_MONITOR_ROLE';")
 
     def check_creation_procedure(self):
-        return self.check_function("SHOW PROCEDURES  LIKE 'SANDBOX_CREATE' IN DATABASE 'SANDBOX_MAIN';")
+        return self.check_function("SHOW PROCEDURES  LIKE 'SANBOX_SETUP' IN DATABASE SANDBOX_MAIN;")
 
     
     def check_cleaning_procedure(self):
-        return self.check_function("SHOW ROLES LIKE 'SANDBOX_DROP' IN DATABASE 'SANDBOX_MAIN';")
+        return self.check_function("SHOW ROLES LIKE 'SANDBOX_DROP' IN DATABASE SANDBOX_MAIN ;")
 
     def check_task(self):
-        return self.check_function("SHOW TASKS LIKE 'SANDBOX_DROP'  IN DATABASE 'SANDBOX_MAIN';")
+        return self.check_function("SHOW TASKS LIKE 'CLEAN_SANDBOX'  IN DATABASE SANDBOX_MAIN;")
 
     
     def check_database(self):
@@ -54,11 +54,13 @@ class snowcon:
         
     
     def check_log_table(self):
-        return self.check_function("SHOW TABLES LIKE 'SANDBOX_LOG';")
+        return self.check_function("SHOW TABLES LIKE 'SANDBOX_LOG' IN DATABASE SANDBOX_MAIN ; ")
         
             
     def check_warhouse(self):
-        return self.check_function("SHOW WAREHOUSES LIKE 'SANDBOX_WH'; ")
+        return self.check_function("SHOW WAREHOUSES LIKE 'SANDBOX_MONITOR_WH' ; ")
+    
+  
         
 #####################################################################################################
 #                           SYSTEM OBJECT CREATION
@@ -73,19 +75,40 @@ class snowcon:
                     return False, e
 
     def create_creation_procedure(self):
-        return True, None
+        with open(os.path.join('setup','creation_procedure.sql'),mode='r') as file :
+            sql_script = file.read()
+        print(sql_script)
+        return self.creation_function(sql_script)
     
     def create_cleaning_procedure(self):
-        return True, None
+        with open(os.path.join('setup','clean_procedure.sql'),mode='r') as file :
+            sql_script = file.read()
+        print(sql_script)
+        return self.creation_function(sql_script)
     
     def create_task(self):
-        return True, None
+        return self.creation_function("""
+        CREATE TASK  IF NOT EXISTS SANDBOX_MAIN.PUBLIC.CLEAN_SANDBOX
+        warehouse = SANDBOX_MONITOR_WH
+        schedule = 'USING CRON  0 0 * * * UTC'
+        as
+        call SANDBOX_MAIN.PUBLIC.SANDBOX_DROP() ;
+        ALTER task SANDBOX_MAIN.PUBLIC.CLEAN_SANDBOX resume;""")
     
     def create_user(self):
-        return True, None
+        return self.creation_function(""" 
+        CREATE  USER  IF NOT EXISTS SANDBOX_MONITOR
+        password=$$Sanddbox_monitor123$$
+        default_role = SANDBOX_ROLE
+        must_change_password = true 
+        COMMENT = "This user is dedicated for the sandbox monitor" ; """)
 
     def create_role(self):
-        return True, None
+        return self.creation_function(f""" 
+        CREATE ROLE  IF NOT EXISTS  SANDBOX_MONITOR_ROLE  ;  
+        GRANT ROLE SANDBOX_MONITOR_ROLE TO ROLE SYSADMIN ;
+        GRANT ROLE SANDBOX_MONITOR_ROLE TO USER SANDBOX_MONITOR ;
+        """)
 
 
     def create_warehouse(self):

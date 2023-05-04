@@ -4,37 +4,43 @@ import datetime
 from time import sleep
 
 def check_system(user_cnx):
+    log_time = 1.5 
     progress_text = "Checking the snowflake environment. Please wait."
     checks_list = [
-        {'name': 'role','checking_func': user_cnx.check_role,  'creation_funct': user_cnx.create_role},
         {'name': 'user','checking_func': user_cnx.check_user, 'creation_funct': user_cnx.create_user},
+        {'name': 'role','checking_func': user_cnx.check_role,  'creation_funct': user_cnx.create_role},
         {'name': 'warhouse','checking_func': user_cnx.check_warhouse,  'creation_funct': user_cnx.create_warehouse},
         {'name': 'database', 'checking_func': user_cnx.check_database, 'creation_funct': user_cnx.create_database},
         {'name': 'log table','checking_func': user_cnx.check_log_table, 'creation_funct': user_cnx.create_log_table},
-        {'name': 'sandbox creation procedure','checking_func': user_cnx.check_log_table, 'creation_funct': user_cnx.create_creation_procedure},
-        {'name': 'sandbox removing procedure','checking_func': user_cnx.check_log_table, 'creation_funct': user_cnx.create_cleaning_procedure},
-        {'name': 'sandbox removing task','checking_func': user_cnx.check_log_table, 'creation_funct': user_cnx.create_task}
+        {'name': 'sandbox creation procedure','checking_func': user_cnx.check_creation_procedure, 'creation_funct': user_cnx.create_creation_procedure},
+        {'name': 'sandbox removing procedure','checking_func': user_cnx.check_cleaning_procedure, 'creation_funct': user_cnx.create_cleaning_procedure},
+        {'name': 'sandbox removing task','checking_func': user_cnx.check_task, 'creation_funct': user_cnx.create_task}
     ]
 
     my_bar = st.progress(0, text=progress_text)
     log = st.empty()
-    for index,percent_complete in enumerate([20,40,60,80,100]):
+    for index,percent_complete in enumerate([0.125,0.25,0.375,0.5,0.625,0.75,0.875,1]):
         log.text(f"- Checking {checks_list[index]['name']}" )
-        sleep(1)
+        sleep(log_time)
         check_status = checks_list[index]['checking_func']()
         if check_status :
             log.text(f"- Validation {checks_list[index]['name']} successful ✔️")
-            sleep(1)
+            sleep(log_time)
         else:
             log.text(f"- Validation {checks_list[index]['name']} failed ❌")
-            sleep(1)
+            sleep(log_time)
             log.text(f"- Creating {checks_list[index]['name']} 🛠️")
-            sleep(1)
+            sleep(log_time)
             creation_status, creation_log = checks_list[index]['creation_funct']()
             if creation_status:
-                log.text(f"- Creation validation {checks_list[index]['name']} successful ✔️")
+                log.text(f"- {checks_list[index]['name'].capitalize()}  created successful ✔️")
+                sleep(log_time)
             else:
-                log.text(f"- {creation_log}")
+                log.text(f"""
+                - {checks_list[index]['name'].capitalize()}  created successful ✔️
+                - {creation_log}
+                """)
+                sleep(log_time)
         
         log.empty()
         my_bar.progress(percent_complete, text=progress_text)
