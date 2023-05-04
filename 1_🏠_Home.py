@@ -18,7 +18,9 @@ def main():
     - Create a user with a default password xxxx that will be requested to change after the first sign in.
     - In case the user selected to upload data to the sandbox, for every uploaded file, a table with one variant column will be created which included the uploaded data.
     """)
-    st.header('Next relase Features')
+    st.header('Technical Guide')
+    st.text("""""")
+    st.header('Next Relase Features')
     st.text("""
     - Add imediate delete button for the sandbox.
     - Provid the option for the user to chose the number of user created for the sanbox ( instead of just one user by sandbox ) 
