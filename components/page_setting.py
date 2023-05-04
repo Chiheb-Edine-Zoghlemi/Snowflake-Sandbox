@@ -1,7 +1,7 @@
 import streamlit as st
 from PIL import Image
 import os 
-import streamlit.components.v1 as components
+import streamlit.components.v1 as component
 
 
         
@@ -37,6 +37,9 @@ def footer():
         color : white; 
         text-decoration: none;
     }
+    .footer a:hover{ 
+        color : #1a6ce7; 
+    }
      .footer span {
      color : red ; 
      }
@@ -46,4 +49,4 @@ def footer():
     <p>Developed with <span> ❤ </span> by <a style='display: block; text-align: center;' href="https://www.linkedin.com/in/chihebedinezoghlemi/" target="_blank">Chiheb Eddine Zoghlami</a></p>
     </footer>
     """
-    components.html(footer)
+    component.html(footer)
