@@ -1,6 +1,5 @@
 import streamlit as st
 from sections.page_setting import generate_page, footer
-from PIL import Image
 def main():
     generate_page('Home', '🏠')
     st.header('Introduction')
@@ -14,31 +13,35 @@ def main():
     - Login using your snowflake account ( use an account with sufficant privillages to create databases and roles ).
     - Wait for the app to install the supporting objects.
     - Provide the usename and the expiration date of the sandbox.
+    - [ Optional step ] Select file of data to upload (json / csv) ( max size by file xxx MB)
     - Click setup button.
     - Repeat the two previous steps as much as needed.
+    
+    PS : For the first login the user must use a user with the ACCOUNTADMIN role, howver after the first login the user can use the sandbox monitor user to login to the app.
     """)
     st.header('Technical Guide')
     st.write("""
-    This usage of the app is very simple. as first step you have to provide your snowflake account. This account must have the sufficent role privillages ( to create databases, roles and user ) something like ACCOUNTADMIN role will be more than sufficiant.
-    After the login the app will create the supporting object for the system to run. thes objects consist of the folowing:
+    After the first login the app will create the supporting object for the app. 
+    Thes objects consist of the folowing:
     - A new role sandbox-monitor-role : this role will be used by the sandbox monitor user and will have the sufficent privillages to monitor and control and created sandboxes.
     - A new user sandbox-monitor : this user can be used to monitor the sandboxes created.
     - A new database sandbox-main : this database will contain all the supporting objects for the system.
     - A new table sandbox-log : this table will be used to monitor the created sandboxes and users. 
+    - A new procedure sandbox-log : this procedure will be used to create the sandbox.
+    - A new procedure sandbox-log : this procedure will be used to delete the sandbox and will be triggered by the task.
+    - A new task sandbox-log : this task will run automatically every day at 00:00 and will delete the expired sandboxes.
 
-    just config the app to work with your snowflake account by providing your credentials and the app will setup everything by itself.
-    Then just provide the sandbox username and the expiration date in which you want the sandbox yo be deleted and the app will setup the sandbox.
-    Setting up the sanbox consist of the following steps : 
+    When setting up a new sanbox, the app will induct  the following steps : 
     - Create a new database for the sandbox.
     - Create a role with the neccessary privillages to use the newly created sandbox.
-    - Create a user with a default password 'Password123' that will be requested to change after the first sign in.
+    - Create a user with a default password 'Password123' that will be requested to change after the first log-in.
     - In case the user selected to upload data to the sandbox, for every uploaded file, a table with one variant column will be created which included the uploaded data.
     """)
     
     st.text("""In the following section, a quick presentation on """)
     cols = st.columns([0.5, 1, 0.5])
     with cols[1]:
-        st.image(Image.open('static\SANDBOX_SETUP.png'), use_column_width=True)
+        st.image("https://sflake-sandbox.s3.eu-north-1.amazonaws.com/SANDBOX_SETUP.png", use_column_width=True)
     st.header('Next Relase Features')
     st.text("""
     - Add immediate delete button for the sandbox.
