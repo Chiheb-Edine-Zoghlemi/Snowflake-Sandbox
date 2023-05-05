@@ -9,6 +9,10 @@ def main():
     This app can be used to create fresh isolated snowflake sandboxes that can be used for testing, development or for technical job interviews. 
     Using the benefits of both Streamlit user-interface and snowflake objects and tool sets any user ( from any background ) can set up a sandbox with one click. 
     """)
+    st.info("""
+    ⚠️ We do not store your credentials or track your usage, everything is stored in the streamlit session and will be deleted the moment you close the app.
+    \n The [source code](https://github.com/Chiheb-Edine-Zoghlemi/Snowflake-Sandbox) of this app is public and you can check it yourself.
+             """)
     st.header('Usage Guide')
     st.write("""
     The usage of this app is pretty stight forward.
@@ -20,6 +24,7 @@ def main():
     
     🔔 PS : For the  login the user must use a user with the **ACCOUNTADMIN** role or a role with sufficiant privillages to create users, roles and databaseobjects.
     """)
+
     st.header('Technical Guide')
     st.write("""
     After the first login the app will create the supporting object for the app. 
