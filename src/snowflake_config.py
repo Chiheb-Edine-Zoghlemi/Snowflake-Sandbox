@@ -4,12 +4,11 @@ import re
 snowflake.connector.paramstyle = 'qmark'
 
 class snowcon:
-    def __init__(self, username, password, account, warhouse, role) -> None:
+    def __init__(self, username, password, account, warhouse) -> None:
         self.username = username
         self.password = password
         self.account = account
         self.warhouse = warhouse
-        self.role = role
 
     def connection(self):
         return snowflake.connector.connect(
