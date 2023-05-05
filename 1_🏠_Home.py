@@ -26,7 +26,7 @@ def main():
     🔔 PS : For the login, the user must use a user with the **ACCOUNTADMIN** role or a role with sufficient privileges to create users, roles and database objects.
     """)
 
-    st.header('Technical Guide')
+    st.header('Technical Description')
     st.write("""
     After the first login, the app will create the supporting object for the app. 
     These objects consist of the following:
