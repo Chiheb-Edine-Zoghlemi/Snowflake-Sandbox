@@ -1,7 +1,7 @@
 import streamlit as st
-from app_components.page_setting import generate_page, footer
-from app_components.auth import login, logout
-from app_components.app import main, check_system
+from sections.page_setting import generate_page, footer
+from sections.auth import login, logout
+from sections.app import main, check_system
 from src.snowflake_config   import snowcon
 
 

@@ -49,4 +49,5 @@ def footer():
     <p>Developed with <span> ❤ </span> by <a style='display: block; text-align: center;' href="https://www.linkedin.com/in/chihebedinezoghlemi/" target="_blank">Chiheb Eddine Zoghlami</a></p>
     </footer>
     """
+    st.markdown('<hr style="width:70%; margin: auto;" />', unsafe_allow_html=True)
     component.html(footer)

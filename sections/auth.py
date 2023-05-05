@@ -32,6 +32,7 @@ def logout():
 
 def login():
         if not st.session_state.authenticated:
+            
             col1, col2, col3, col4, col5 = st.columns(5)
             account = col1.text_input('Account').strip()
             username = col2.text_input('Username').strip()
@@ -39,4 +40,5 @@ def login():
             warhouse  = col4.text_input('Warhouse').strip()
             role  = col5.text_input('Role').strip()
             button = st.button("Login", on_click=check_user, args=(username, password, account, warhouse, role))
+            st.write('Please read the [usage guide page](/) for insctruction on the account requirements.')
 
