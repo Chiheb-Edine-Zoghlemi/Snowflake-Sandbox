@@ -18,8 +18,14 @@ The usage of this app is pretty straight forward.
 
 ## Technical Description
 
-After the first login, the app will create the supporting object for the app.
-These objects consist of the following:
+The app is build using the following two main components:
+
+- A schduled task that run daily and delete the expired sandboxes.
+- A store procedure that will be triggered from a streamlit app, which will create a new fresh sandbox.
+
+![General Technical Description](static/SANDBOX_SETUP.png)
+
+After the first login, the app will create the following supporting objects:
 
 - A new role sandbox-monitor-role : this role will be used by the sandbox monitor user and will have the sufficient privileges to monitor and control and created sandboxes.
 - A new user sandbox-monitor : this user can be used to monitor the sandboxes created.
@@ -30,7 +36,7 @@ These objects consist of the following:
 - A new procedure SANDBOX_DROP : this procedure will be used to delete the sandbox and will be triggered by the task.
 - A new task CLEAN_SANDBOX : this task will run automatically every day at 00:00 and will delete the expired sandboxes.
 
-When setting up a new sandbox, the app will induct the following steps :
+When setting up a new sandbox, the app will conduct the following steps :
 
 - Create a role with the necessary privileges to use the newly created sandbox.
 - Create a user with a default password 'Password123' that will be requested to change after the first log-in.

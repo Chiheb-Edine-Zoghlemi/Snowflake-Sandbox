@@ -11,7 +11,7 @@ def main():
     Using the benefits of both Streamlit user-interface and snowflake  tools set, any user ( from any background ) can set up a sandbox with one click. 
     """)
     st.info("""
-    ⚠️ We do not store your credentials or track your usage, everything is stored in the streamlit session and will be deleted the moment you close the app.
+    ⚠️ We do not store your credentials or track your usage, everything is stored in the streamlit session and will be deleted the moment you refresh the page.
     \n The [source code](https://github.com/Chiheb-Edine-Zoghlemi/Snowflake-Sandbox) of this app is public and you can review it yourself.
              """)
     st.header('Usage Guide')
@@ -28,8 +28,17 @@ def main():
 
     st.header('Technical Description')
     st.write("""
-    After the first login, the app will create the supporting object for the app. 
-    These objects consist of the following:
+    The app is build using the following two main components:
+    - A schduled task that run daily and delete the expired sandboxes.
+    - A store procedure that will be triggered from a streamlit app, which will create a new fresh sandbox.
+    """)
+
+    cols = st.columns([0.5, 1, 0.5])
+    with cols[1]:
+        st.image(Image.open(os.path.join('static','SANDBOX_SETUP.png')), use_column_width=True)
+
+    st.write("""
+    After the first login, the app will create the following supporting objects:
     - A new role sandbox-monitor-role : this role will be used by the sandbox monitor user and will have the sufficient privileges to monitor and control and created sandboxes.
     - A new user sandbox-monitor : this user can be used to monitor the sandboxes created.
     - A new database sandbox-main : this database will contain all the supporting objects for the system.
@@ -38,19 +47,15 @@ def main():
     - A new procedure, SANBOX_SETUP : this procedure will be used to create the sandbox.
     - A new procedure SANDBOX_DROP : this procedure will be used to delete the sandbox and will be triggered by the task.
     - A new task CLEAN_SANDBOX : this task will run automatically every day at 00:00 and will delete the expired sandboxes.
-
-    The appthe app will induct the following steps : 
-    - Trigger a stored procedure in snowflake which will create the sandbox.
-    - Store the username and expiration date in a log table
-
-    Create a role with the necessary privileges to use the newly created sandbox.
+     """)
+    st.write("""
+    When setting up a new sandbox, the app will conduct the following steps :
+    - Create a role with the necessary privileges to use the newly created sandbox.
     - Create a user with a default password 'Password123' that will be requested to change after the first log-in.
     - Create a new database for the sandbox.
     """)
     
-    cols = st.columns([0.5, 1, 0.5])
-    with cols[1]:
-        st.image(Image.open(os.path.join('static','SANDBOX_SETUP.png')), use_column_width=True)
+    
     st.header('Next Release  Features')
     st.write("""
     - Add the option to delete a sandbox immediately.
