@@ -1,5 +1,6 @@
 import snowflake.connector
 import os 
+import re 
 snowflake.connector.paramstyle = 'qmark'
 
 class snowcon:
@@ -144,10 +145,11 @@ class snowcon:
     def run_procedure(self, user_name, expiry_date, uploaded_files):
         try:
             with  self.connection().cursor() as cs:
-                cs.execute("CALL SANDBOX_MAIN.PUBLIC.SANBOX_SETUP(?, ?)",[ user_name, expiry_date])
-            return 'Sandbox created successfully'
-        except:
-            return 'Error creating the sandbox'
+                cs.execute("CALL SANDBOX_MAIN.PUBLIC.SANBOX_SETUP(?, ?)",[re.sub(' +', ' ', user_name).replace(' ','_'), expiry_date])
+            return  True 
+        except Exception as e :
+            print(f' [ ERROR CREATING SANDBOX ] : {e}')
+            return False
             
 # INSERT INTO varia (v) SELECT TO_VARIANT(PARSE_JSON('{"key3": "value3", "key4": "value4"}'));
 # CREATE TABLE varia (v VARIANT);

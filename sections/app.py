@@ -63,8 +63,13 @@ def main(user_cnx):
             if submitted:
                 with st.spinner('Creating the environment'):
                     ret = user_cnx.run_procedure(user_name, expiry_date, uploaded_files = None)
-                    st.info(ret)
-                    st.snow()
+                    if ret:
+                        st.success('Sandbox created successfully')
+                        st.snow()
+                    else:
+                        st.error('Error creating the sandbox')
+                    
+                    
     with col2:
         st.text(' Current Active Sandboxes ')
         with st.spinner('Fetching the Data'):

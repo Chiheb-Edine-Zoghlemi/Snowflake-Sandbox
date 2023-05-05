@@ -37,17 +37,16 @@ Thes objects consist of the folowing:
 - A new user sandbox-monitor : this user can be used to monitor the sandboxes created.
 - A new database sandbox-main : this database will contain all the supporting objects for the system.
 - A new table sandbox-log : this table will be used to monitor the created sandboxes and users.
-- A new procedure sandbox-log : this procedure will be used to create the sandbox.
-- A new procedure sandbox-log : this procedure will be used to delete the sandbox and will be triggered by the task.
-- A new task sandbox-log : this task will run automatically every day at 00:00 and will delete the expired sandboxes.
+- A new warhouse SANDBOX_MONITOR_WH : this warhouse can be used by the sandbox monitor user.
+- A new procedure SANBOX_SETUP : this procedure will be used to create the sandbox.
+- A new procedure SANDBOX_DROP : this procedure will be used to delete the sandbox and will be triggered by the task.
+- A new task CLEAN_SANDBOX : this task will run automatically every day at 00:00 and will delete the expired sandboxes.
 
-When setting up a new sanbox, the app will induct  the following steps :
+When setting up a new sanbox, the app will conduct the following steps :
 
 - Create a role with the neccessary privillages to use the newly created sandbox.
 - Create a user with a default password 'Password123' that will be requested to change after the first log-in.
 - Create a new database for the sandbox.
-- Create a new table with one variant column for every file uploaded.
-- In case the user selected to upload data to the sandbox, for every uploaded file, a table with one variant column will be created which included the uploaded data.
 
 ## Next Relase Features
 

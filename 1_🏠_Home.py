@@ -32,10 +32,11 @@ def main():
     - A new role sandbox-monitor-role : this role will be used by the sandbox monitor user and will have the sufficent privillages to monitor and control and created sandboxes.
     - A new user sandbox-monitor : this user can be used to monitor the sandboxes created.
     - A new database sandbox-main : this database will contain all the supporting objects for the system.
-    - A new table sandbox-log : this table will be used to monitor the created sandboxes and users. 
-    - A new procedure sandbox-log : this procedure will be used to create the sandbox.
-    - A new procedure sandbox-log : this procedure will be used to delete the sandbox and will be triggered by the task.
-    - A new task sandbox-log : this task will run automatically every day at 00:00 and will delete the expired sandboxes.
+    - A new table sandbox-log : this table will be used to monitor the created sandboxes and users.
+    - A new warhouse SANDBOX_MONITOR_WH : this warhouse can be used by the sandbox monitor user.
+    - A new procedure SANBOX_SETUP : this procedure will be used to create the sandbox.
+    - A new procedure SANDBOX_DROP : this procedure will be used to delete the sandbox and will be triggered by the task.
+    - A new task CLEAN_SANDBOX : this task will run automatically every day at 00:00 and will delete the expired sandboxes.
 
     When setting up a new sanbox, the app will induct  the following steps : 
     - Create a role with the neccessary privillages to use the newly created sandbox.
