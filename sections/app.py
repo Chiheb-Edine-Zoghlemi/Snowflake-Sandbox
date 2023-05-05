@@ -4,7 +4,7 @@ import datetime
 from time import sleep
 
 def check_system(user_cnx):
-    check_system = True
+    check_sys = 0
     log_time = 0.5 
     progress_text = "Checking the snowflake environment. Please wait."
     checks_list = [
@@ -24,8 +24,8 @@ def check_system(user_cnx):
         log.text(f"- Checking {checks_list[index]['name']}" )
         sleep(log_time)
         check_status = checks_list[index]['checking_func']()
-        check_system = check_status and check_system
         if check_status :
+            check_sys = check_sys + 1
             log.text(f"- Validation {checks_list[index]['name']} successful ✔️")
             sleep(log_time)
         else:
@@ -34,8 +34,8 @@ def check_system(user_cnx):
             log.text(f"- Creating {checks_list[index]['name']} 🛠️")
             sleep(log_time)
             creation_status, creation_log = checks_list[index]['creation_funct']()
-            check_system = check_status and creation_status
             if creation_status:
+                check_sys = check_sys + 1
                 log.text(f"- {checks_list[index]['name'].capitalize()}  created successful ✔️")
                 sleep(log_time)
             else:
@@ -48,8 +48,8 @@ def check_system(user_cnx):
         log.empty()
         my_bar.progress(percent_complete, text=progress_text)
     my_bar.empty()
-    st.session_state['check_status'] = check_system
-    return check_status
+    st.session_state['check_status'] = check_sys
+    return check_sys
     
 
 def main(user_cnx):

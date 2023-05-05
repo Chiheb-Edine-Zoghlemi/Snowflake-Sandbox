@@ -26,6 +26,8 @@ class snowcon:
                     cs.execute(query)
                     if cs.fetchone():
                         return True
+                    else:
+                        return False
                 except Exception as e :
                     print("[ CHECKING FUNCTION ERROR ]",e)
                     return False
@@ -104,7 +106,7 @@ class snowcon:
         COMMENT = "This user is dedicated for the sandbox monitor" ; """)
 
     def create_role(self):
-        return self.creation_function(f""" 
+        return self.creation_function(""" 
         BEGIN
         CREATE ROLE  IF NOT EXISTS  SANDBOX_MONITOR_ROLE  ;  
         GRANT ROLE SANDBOX_MONITOR_ROLE TO ROLE SYSADMIN ;

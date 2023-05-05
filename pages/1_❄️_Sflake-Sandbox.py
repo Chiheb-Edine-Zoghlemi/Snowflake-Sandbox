@@ -18,9 +18,9 @@ if 'authenticated' in st.session_state:
         if 'check_status' not in st.session_state:
             check_status = check_system(user_cnx)
         else:
-            check_status = st.session_state.get('check_status')
+            check_status = st.session_state.check_status
         
-        if check_status:
+        if check_status == 8:
             main(user_cnx)
         else:
             st.error(' [  SYSTEM  SETUP FAILED ] : Please make sure to follow the guiddlines provided in the Home page')
