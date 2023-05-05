@@ -16,6 +16,8 @@ if 'authenticated' in st.session_state:
                            st.session_state.warhouse,
                            st.session_state.role)
         logout()
+        st.text(st.session_state)
+        
         check_status = check_system(user_cnx)
         if check_status:
             main(user_cnx)

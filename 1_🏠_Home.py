@@ -1,5 +1,7 @@
 import streamlit as st
 from sections.page_setting import generate_page, footer
+import os 
+from PIL import Image
 def main():
     generate_page('Home', '🏠')
     st.header('Introduction')
@@ -13,11 +15,10 @@ def main():
     - Login using your snowflake account ( use an account with sufficant privillages to create databases and roles ).
     - Wait for the app to install the supporting objects.
     - Provide the usename and the expiration date of the sandbox.
-    - [ Optional step ] Select file of data to upload (json / csv) ( max size by file xxx MB)
     - Click setup button.
     - Repeat the two previous steps as much as needed.
     
-    PS : For the first login the user must use a user with the ACCOUNTADMIN role, howver after the first login the user can use the sandbox monitor user to login to the app.
+    🔔 PS : For the  login the user must use a user with the **ACCOUNTADMIN** role or a role with sufficiant privillages to create users, roles and databaseobjects.
     """)
     st.header('Technical Guide')
     st.write("""
@@ -43,13 +44,14 @@ def main():
     st.text("""In the following section, a quick presentation on """)
     cols = st.columns([0.5, 1, 0.5])
     with cols[1]:
-        st.image("https://sflake-sandbox.s3.eu-north-1.amazonaws.com/SANDBOX_SETUP.png", use_column_width=True)
+        st.image(Image.open(os.path.join('static','SANDBOX_SETUP.png')), use_column_width=True)
     st.header('Next Relase Features')
-    st.text("""
-    - Add immediate delete button for the sandbox.
-    - Provide the option for the user to choose the number of user created by sandbox ( instead of just one user by sandbox ) 
+    st.write("""
+    - Add  the option to delete a sandbox immediatly.
+    - Provide the option for the user to choose the number of sandbox users.
     - Add the possibility to assign user to multiple sandboxes.
-    - Add a monitor by sandbox and provide the a usage limit by sandbox / sandbox user
+    - Add a monitor by sandbox and provide the a usage limit by sandbox / sandbox user.
+    - Upload data to the new created sandbox  (json / csv).
     """)
     footer()
     
