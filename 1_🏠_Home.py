@@ -23,7 +23,7 @@ def main():
     - Click setup button.
     - Repeat the two previous steps as much as needed.
     
-    🔔 PS : For the login, the user must use a user with the **ACCOUNTADMIN** role or a role with sufficient privileges to create users, roles and database objects.
+    🔔 PS : For the login, a user with the **ACCOUNTADMIN** role or a role with sufficient privileges to create users, roles and database objects must be provided.
     """)
 
     st.header('Technical Description')
@@ -39,13 +39,15 @@ def main():
     - A new procedure SANDBOX_DROP : this procedure will be used to delete the sandbox and will be triggered by the task.
     - A new task CLEAN_SANDBOX : this task will run automatically every day at 00:00 and will delete the expired sandboxes.
 
-    When setting up a new sandbox, the app will induct the following steps : 
-    - Create a role with the necessary privileges to use the newly created sandbox.
+    The appthe app will induct the following steps : 
+    - Trigger a stored procedure in snowflake which will create the sandbox.
+    - Store the username and expiration date in a log table
+
+    Create a role with the necessary privileges to use the newly created sandbox.
     - Create a user with a default password 'Password123' that will be requested to change after the first log-in.
     - Create a new database for the sandbox.
     """)
     
-    st.text("""In the following section, a quick presentation on """)
     cols = st.columns([0.5, 1, 0.5])
     with cols[1]:
         st.image(Image.open(os.path.join('static','SANDBOX_SETUP.png')), use_column_width=True)
