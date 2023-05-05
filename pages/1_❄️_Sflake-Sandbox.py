@@ -13,8 +13,7 @@ if 'authenticated' in st.session_state:
         user_cnx = snowcon(st.session_state.username,
                            st.session_state.password,
                            st.session_state.account,
-                           st.session_state.warhouse,
-                           st.session_state.role)
+                           st.session_state.warhouse)
         logout()
         if 'check_status' not in st.session_state:
             check_status = check_system(user_cnx)

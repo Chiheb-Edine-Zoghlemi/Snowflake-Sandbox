@@ -15,8 +15,7 @@ class snowcon:
             user=self.username,
             password=self.password,
             account=self.account,
-            warehouse=self.warhouse,
-            role=self.role
+            warehouse=self.warhouse
             )
 #####################################################################################################
 #                           SYSTEM OBJECTS CHECKING
@@ -154,14 +153,13 @@ class snowcon:
 # CREATE TABLE varia (v VARIANT);
 #####################################################################################################
 
-def validated_credentials(username, password, account, warhouse, role):
+def validated_credentials(username, password, account, warhouse):
     try:
         snowflake.connector.connect(
             user=username,
             password=password,
             account=account,
-            warehouse=warhouse,
-            role=role
+            warehouse=warhouse
             )
         return True 
     except Exception as e :
