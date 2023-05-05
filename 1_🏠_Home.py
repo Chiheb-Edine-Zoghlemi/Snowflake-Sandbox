@@ -25,7 +25,9 @@ def main():
     
     🔔 PS : For the login, a user with the **ACCOUNTADMIN** role or a role with sufficient privileges to create users, roles and database objects must be provided.
     """)
-
+    video_file = open(os.path.join('static','demo.mkv'), 'rb')
+    video_bytes = video_file.read()
+    st.video(video_bytes)
     st.header('Technical Description')
     st.write("""
     The app is build using the following two main components:

@@ -15,7 +15,9 @@ if 'authenticated' in st.session_state:
                            st.session_state.account,
                            st.session_state.warhouse)
         logout()
+        st.write(st.session_state)
         if 'check_status' not in st.session_state:
+            st.session_state['check_status'] = None
             check_status = check_system(user_cnx)
         else:
             check_status = st.session_state.check_status
