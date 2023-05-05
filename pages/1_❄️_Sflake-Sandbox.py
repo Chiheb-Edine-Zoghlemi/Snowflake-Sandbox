@@ -5,7 +5,7 @@ from sections.app import main, check_system
 from src.snowflake_config   import snowcon
 
 
-generate_page('Snowflake-Sandbox', '❄️')
+generate_page('Sflake-Sandbox', '❄️')
 
 
 if 'authenticated' in st.session_state:

@@ -2,31 +2,19 @@
 
 ## General Description
 
-This app can be used to create fresh isolated snowflake sandboxes that can be used for testing, development or for technical job interviews.
-Using the benefits of both Streamlit user-interface and snowflake objects and tool sets any user ( from any background ) can set up a sandbox with one click.
-
-## Features
-
-In the following list of implemented feautres :
-
-1. Link the app to a signle snowflake environment (inprogress)
-    1. connection validation (inprogress)
-    2. install the config scripts in the destination  environment (inprogress)
-
-Features that will be implemented :
-
-1. Link the app to a multiple snowflake environments
+This app can be used to create fresh isolated snowflake sandboxes that can be used for testing, development or for technical job interviews. 
+Using the benefits of both Streamlit user-interface and snowflake  tools set, any user ( from any background ) can set up a sandbox with one click. 
 
 ## Usage Guide
 
-The usage of this app is pretty stight forward.
-    - Login using your snowflake account ( use an account with sufficant privillages to create databases and roles ).
-    - Wait for the app to install the supporting objects.
-    - Provide the usename and the expiration date of the sandbox.
-    - Click setup button.
-    - Repeat the two previous steps as much as needed.
+The usage of this app is pretty straight forward.
 
-🔔 PS : For the  login the user must use a user with the **ACCOUNTADMIN** role or a role with sufficiant privillages to create users, roles and databaseobjects.
+- Login using your snowflake account ( use an account with sufficient privileges to create databases and roles ).
+- Wait for the app to install the supporting objects.
+- Provide the username and the expiration date of the sandbox.
+- Click setup button.
+- Repeat the two previous steps as much as needed.
+🔔 PS : For the login, the user must use a user with the **ACCOUNTADMIN** role or a role with sufficient privileges to create users, roles and database objects.
 
 ## Technical Description
 
@@ -50,8 +38,8 @@ When setting up a new sanbox, the app will conduct the following steps :
 
 ## Next Relase Features
 
-- Add  the option to delete a sandbox immediatly.
-- Provide the option for the user to choose the number of sandbox users.
-- Add the possibility to assign user to multiple sandboxes.
-- Add a monitor by sandbox and provide the a usage limit by sandbox / sandbox user.
-- Upload data to the new created sandbox  (json / csv).
+ - Add the option to delete a sandbox immediately.
+    - Provide the option for the user to choose the number of sandbox users.
+    - Add the possibility to assign user to multiple sandboxes.
+    - Add a monitor by sandbox and provide a usage limit by sandbox / sandbox user.
+    - Upload data to the new created sandbox (JSON / CSV).
