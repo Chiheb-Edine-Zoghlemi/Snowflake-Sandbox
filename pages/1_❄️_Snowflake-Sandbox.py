@@ -1,8 +1,8 @@
 import streamlit as st
-from components.page_setting import generate_page, footer
-from components.auth import login, logout
-from components.app import main, check_system
-from src.snowflake import snowcon
+from app_components.page_setting import generate_page, footer
+from app_components.auth import login, logout
+from app_components.app import main, check_system
+from src.snowflake_config   import snowcon
 
 
 generate_page('Snowflake-Sandbox', '❄️')
@@ -15,9 +15,15 @@ if 'authenticated' in st.session_state:
                            st.session_state.account,
                            st.session_state.warhouse,
                            st.session_state.role)
-        check_system(user_cnx)
         logout()
-        main(user_cnx)
+        check_status = check_system(user_cnx)
+        if check_status:
+            main(user_cnx)
+        else:
+            st.error(' [  SYSTEM  SETUP FAILED ] : Please make sure to follow the guiddlines provided in the Home page')
+            
+        
+        
     else:
         login()
 else:

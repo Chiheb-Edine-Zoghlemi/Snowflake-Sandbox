@@ -1,6 +1,6 @@
 
 import streamlit as st
-from src.snowflake import validated_credentials
+from src.snowflake_config import validated_credentials
 
 def reset_session():
     st.session_state.authenticated = False

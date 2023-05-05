@@ -43,7 +43,7 @@ class snowcon:
 
     
     def check_cleaning_procedure(self):
-        return self.check_function("SHOW ROLES LIKE 'SANDBOX_DROP' IN DATABASE SANDBOX_MAIN ;")
+        return self.check_function("SHOW PROCEDURES LIKE 'SANDBOX_DROP' IN DATABASE SANDBOX_MAIN ;")
 
     def check_task(self):
         return self.check_function("SHOW TASKS LIKE 'CLEAN_SANDBOX'  IN DATABASE SANDBOX_MAIN;")
@@ -76,24 +76,25 @@ class snowcon:
 
     def create_creation_procedure(self):
         with open(os.path.join('setup','creation_procedure.sql'),mode='r') as file :
-            sql_script = file.read()
-        print(sql_script)
+            sql_script = file.read().strip()
         return self.creation_function(sql_script)
     
     def create_cleaning_procedure(self):
         with open(os.path.join('setup','clean_procedure.sql'),mode='r') as file :
-            sql_script = file.read()
-        print(sql_script)
+            sql_script = file.read().strip()
         return self.creation_function(sql_script)
     
     def create_task(self):
         return self.creation_function("""
+        BEGIN
         CREATE TASK  IF NOT EXISTS SANDBOX_MAIN.PUBLIC.CLEAN_SANDBOX
         warehouse = SANDBOX_MONITOR_WH
         schedule = 'USING CRON  0 0 * * * UTC'
         as
         call SANDBOX_MAIN.PUBLIC.SANDBOX_DROP() ;
-        ALTER task SANDBOX_MAIN.PUBLIC.CLEAN_SANDBOX resume;""")
+        ALTER task SANDBOX_MAIN.PUBLIC.CLEAN_SANDBOX resume;
+        END ; 
+        """)
     
     def create_user(self):
         return self.creation_function(""" 
@@ -143,7 +144,7 @@ class snowcon:
 
 def validated_credentials(username, password, account, warhouse, role):
     try:
-        cnx = snowflake.connector.connect(
+        snowflake.connector.connect(
             user=username,
             password=password,
             account=account,

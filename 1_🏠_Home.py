@@ -1,5 +1,5 @@
 import streamlit as st
-from components.page_setting import generate_page, footer
+from app_components.page_setting import generate_page, footer
 
 def main():
     generate_page('Home', '🏠')
@@ -15,7 +15,7 @@ def main():
     Setting up the sanbox consist of the following steps : 
     - Create a new database for the sandbox.
     - Create a role with the neccessary privillages to use the newly created sandbox.
-    - Create a user with a default password xxxx that will be requested to change after the first sign in.
+    - Create a user with a default password 'Password123' that will be requested to change after the first sign in.
     - In case the user selected to upload data to the sandbox, for every uploaded file, a table with one variant column will be created which included the uploaded data.
     """)
     st.header('Technical Guide')
