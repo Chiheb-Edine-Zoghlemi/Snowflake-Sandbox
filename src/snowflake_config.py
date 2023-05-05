@@ -1,6 +1,6 @@
 import snowflake.connector
 import os 
-
+snowflake.connector.paramstyle = 'qmark'
 
 class snowcon:
     def __init__(self, username, password, account, warhouse, role) -> None:
@@ -106,9 +106,11 @@ class snowcon:
 
     def create_role(self):
         return self.creation_function(f""" 
+        BEGIN
         CREATE ROLE  IF NOT EXISTS  SANDBOX_MONITOR_ROLE  ;  
         GRANT ROLE SANDBOX_MONITOR_ROLE TO ROLE SYSADMIN ;
         GRANT ROLE SANDBOX_MONITOR_ROLE TO USER SANDBOX_MONITOR ;
+        END;
         """)
 
 
@@ -138,8 +140,17 @@ class snowcon:
             cs.execute("SELECT USER_NAME, EXPIRATION_DATE, CREATION_DATE from SANDBOX_MAIN.PUBLIC.SANDBOX_LOG ")
             records  = cs.fetchall()
         return records
-    def run_procedure(self):
-        pass
+    
+    def run_procedure(self, user_name, expiry_date, uploaded_files):
+        try:
+            with  self.connection().cursor() as cs:
+                cs.execute("CALL SANDBOX_MAIN.PUBLIC.SANBOX_SETUP(?, ?)",[ user_name, expiry_date])
+            return 'Sandbox created successfully'
+        except:
+            return 'Error creating the sandbox'
+            
+# INSERT INTO varia (v) SELECT TO_VARIANT(PARSE_JSON('{"key3": "value3", "key4": "value4"}'));
+# CREATE TABLE varia (v VARIANT);
 #####################################################################################################
 
 def validated_credentials(username, password, account, warhouse, role):

@@ -9,6 +9,7 @@ def reset_session():
     del st.session_state['account'] 
     del st.session_state['warhouse']
     del st.session_state['role']
+    del st.session_state['check_status']
 
 def check_user(username, password, account, warhouse, role):
     if username and  password and  account and  warhouse:

@@ -13,8 +13,7 @@ begin
   
   -- create the database
   CREATE OR REPLACE DATABASE identifier(:DATABASE_NAME) ; 
-  -- create the schema assessmeenttest
-  CREATE OR REPLACE SCHEMA identifier(:SCHEMA_NAME); 
+
   USE DATABASE identifier(:DATABASE_NAME) ; 
 
   -- create the canddidat role 

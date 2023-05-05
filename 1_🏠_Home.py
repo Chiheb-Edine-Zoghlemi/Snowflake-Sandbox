@@ -32,9 +32,11 @@ def main():
     - A new task sandbox-log : this task will run automatically every day at 00:00 and will delete the expired sandboxes.
 
     When setting up a new sanbox, the app will induct  the following steps : 
-    - Create a new database for the sandbox.
     - Create a role with the neccessary privillages to use the newly created sandbox.
     - Create a user with a default password 'Password123' that will be requested to change after the first log-in.
+    - Create a new database for the sandbox.
+    - Create a new table with one variant column for every file uploaded.
+    
     - In case the user selected to upload data to the sandbox, for every uploaded file, a table with one variant column will be created which included the uploaded data.
     """)
     

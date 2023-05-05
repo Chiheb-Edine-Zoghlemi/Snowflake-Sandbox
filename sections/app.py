@@ -5,7 +5,7 @@ from time import sleep
 
 def check_system(user_cnx):
     check_system = True
-    log_time = 1.25 
+    log_time = 0.5 
     progress_text = "Checking the snowflake environment. Please wait."
     checks_list = [
         {'name': 'user','checking_func': user_cnx.check_user, 'creation_funct': user_cnx.create_user},
@@ -48,7 +48,8 @@ def check_system(user_cnx):
         log.empty()
         my_bar.progress(percent_complete, text=progress_text)
     my_bar.empty()
-    return check_system
+    st.session_state['check_status'] = check_system
+    return check_status
     
 
 def main(user_cnx):
@@ -57,16 +58,17 @@ def main(user_cnx):
         with st.form(key='my_form'):
             user_name = st.text_input(label='Sandbox user')
             expiry_date= str(st.date_input( "Expiration Date", datetime.date.today()))
+            # uploaded_files = st.file_uploader("Choose a CSV /JSON file(s)", type =['csv', 'json'] , accept_multiple_files=True)
             submitted = st.form_submit_button(label='SETUP')
             if submitted:
                 with st.spinner('Creating the environment'):
-                    ret = user_cnx.run_procedure(user_name, expiry_date)
+                    ret = user_cnx.run_procedure(user_name, expiry_date, uploaded_files = None)
                     st.info(ret)
                     st.snow()
     with col2:
-        st.text(' Current Active Tests ')
+        st.text(' Current Active Sandboxes ')
         with st.spinner('Fetching the Data'):
             data = user_cnx.load_sandboxes()
         df = pd.DataFrame(data, columns=("USERNAME","EXPIRATION DATE", "CREATION DATE"))
         st.table(df)
-    st.markdown('<hr style="width:70%; margin: auto;" />', unsafe_allow_html=True)
+    
