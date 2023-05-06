@@ -138,7 +138,7 @@ class snowcon:
     def load_sandboxes(self):
         records = []
         with  self.connection().cursor() as cs:
-            cs.execute("SELECT USER_NAME, EXPIRATION_DATE, CREATION_DATE from SANDBOX_MAIN.PUBLIC.SANDBOX_LOG ")
+            cs.execute("SELECT DISTINCT USER_NAME, EXPIRATION_DATE, CREATION_DATE from SANDBOX_MAIN.PUBLIC.SANDBOX_LOG ")
             records  = cs.fetchall()
         return records
     
