@@ -37,7 +37,7 @@ begin
   GRANT ROLE identifier(:ROLE_NAME)  TO  USER identifier(:USER_NAME);  
   GRANT ALL ON DATABASE identifier(:DATABASE_NAME)  TO ROLE  identifier(:ROLE_NAME) ;
 
-  GRANT ALL ON SCHEMA identifier(:DATABASE_NAME).PUBLIC  TO ROLE  identifier(:ROLE_NAME) ;
+  GRANT ALL ON SCHEMA PUBLIC  TO ROLE  identifier(:ROLE_NAME) ;
   GRANT USAGE ON WAREHOUSE identifier(:WAREHOUSE_NAME) TO ROLE identifier(:ROLE_NAME);
  
   --create and grant the privillage to the SANDBOX_MONITOR role 
